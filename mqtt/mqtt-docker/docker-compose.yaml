@@ -6,7 +6,7 @@ services:
       - "1883:1883"
       - "9001:9001"
     volumes:
-      - /home/roger/uni/4t/CompDist/mqtt_examples/mqtt/MQTTBroker/config:/mosquitto/config
-      - /home/roger/uni/4t/CompDist/mqtt_examples/mqtt/MQTTBroker/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
-      - /home/roger/uni/4t/CompDist/mqtt_examples/mqtt/MQTTBroker/data:/mosquitto/data
-      - /home/roger/uni/4t/CompDist/mqtt_examples/mqtt/MQTTBroker/log:/mosquitto/log
+      - /home/roger/uni/4t/CompDist/IoT-Home-Network/mqtt/MQTTBroker/config:/mosquitto/config
+      - /home/roger/uni/4t/CompDist/IoT-Home-Network/mqtt/MQTTBroker/config/mosquitto.conf:/mosquitto/config
+      - /home/roger/uni/4t/CompDist/IoT-Home-Network/mqtt/MQTTBroker/data:/mosquitto/data
+      - /home/roger/uni/4t/CompDist/IoT-Home-Network/mqtt/MQTTBroker/log:/mosquitto/log
