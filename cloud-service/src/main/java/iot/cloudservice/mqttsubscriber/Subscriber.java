@@ -1,20 +1,24 @@
 package iot.cloudservice.mqttsubscriber;
 
+import iot.cloudservice.data.MqttToKafkaQueue;
 import org.eclipse.paho.client.mqttv3.*;
 
-public class Subscriber {
+public class Subscriber extends Thread {
     MqttClient client;
     String clientId;
     String topic;
     String broker;
     int qos;
 
-    public Subscriber(String clientId, String broker, String topic, int qos){
+    MqttToKafkaQueue queue;
+
+    public Subscriber(String clientId, String broker, String topic, int qos, MqttToKafkaQueue queue){
         this.clientId = clientId;
         this.topic = topic;
         this.qos = qos;
         this.broker = broker;
         createClient();
+        this.queue = queue;
     }
 
     private void createClient(){
@@ -25,7 +29,8 @@ public class Subscriber {
         }
     }
 
-    public void start(){
+    public void run(){
+        System.out.println("Subscriber UP!");
         client.setCallback(new MqttCallback() {
             @Override
             public void connectionLost(Throwable throwable) {
@@ -34,9 +39,11 @@ public class Subscriber {
 
             @Override
             public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
-                System.out.println("topic: " + topic);
-                System.out.println("Qos: " + mqttMessage.getQos());
-                System.out.println("message: " + new String(mqttMessage.getPayload()));
+                System.out.println("Subscriber: topic: " + topic);
+                System.out.println("Subscriber: Qos: " + mqttMessage.getQos());
+                System.out.println("Subscriber: message: " + new String(mqttMessage.getPayload()));
+                System.out.println("");
+                queue.push(mqttMessage);
             }
 
             @Override
