@@ -7,9 +7,9 @@ import pandas as pd
 df = pd.read_csv("data.csv")
 
 for _, row in df.iterrows():
-    publish.single("ClassTest/temperature"),
+    publish.single("Temperature",
     row,
-    hostname="host.docker.internal"
+    hostname="host.docker.internal")
     time.sleep(10)
 
 publish.single(f"ClassTest/status",
