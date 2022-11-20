@@ -2,18 +2,12 @@ import paho.mqtt.publish as publish
 from random import random
 from random import seed
 import time
+import pandas as pd
 
-publish.single(f"ClassTest/status",
-               "up",
-               hostname="host.docker.internal")
+df = pd.read_csv("temperature.csv")
 
-seed(1)
-for _ in range(10):
-    publish.single("ClassTest/temperature",
-                   random(),
-                   hostname="host.docker.internal")
-    time.sleep(1)
-
-publish.single(f"ClassTest/status",
-               "down",
-               hostname="host.docker.internal")
+for _, row in df.iterrows():
+    publish.single("Temperature",
+    str(row["Temperature"].item()),
+    hostname="host.docker.internal")
+    time.sleep(10)
