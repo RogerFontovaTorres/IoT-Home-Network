@@ -1,24 +1,27 @@
 package iot.cloudservice.mqttsubscriber;
 
+import iot.cloudservice.data.MqttToDatabaseQueue;
 import iot.cloudservice.data.MqttToKafkaQueue;
 import org.eclipse.paho.client.mqttv3.*;
 
 public class Subscriber extends Thread {
-    MqttClient client;
-    String clientId;
-    String topic;
-    String broker;
-    int qos;
+    private MqttClient client;
+    private final String clientId;
+    private final String topic;
+    private final String broker;
+    private final int qos;
 
-    MqttToKafkaQueue queue;
+    MqttToKafkaQueue kafkaQueue;
+    MqttToDatabaseQueue databaseQueue;
 
-    public Subscriber(String clientId, String broker, String topic, int qos, MqttToKafkaQueue queue){
+    public Subscriber(String clientId, String broker, String topic, int qos, MqttToKafkaQueue kafkaQueue, MqttToDatabaseQueue databaseQueue){
         this.clientId = clientId;
         this.topic = topic;
         this.qos = qos;
         this.broker = broker;
         createClient();
-        this.queue = queue;
+        this.kafkaQueue = kafkaQueue;
+        this.databaseQueue = databaseQueue;
     }
 
     private void createClient(){
@@ -43,7 +46,8 @@ public class Subscriber extends Thread {
                 System.out.println("Subscriber: Qos: " + mqttMessage.getQos());
                 System.out.println("Subscriber: message: " + new String(mqttMessage.getPayload()));
                 System.out.println("");
-                queue.push(mqttMessage);
+                kafkaQueue.push(mqttMessage);
+                databaseQueue.push(mqttMessage);
             }
 
             @Override
