@@ -11,8 +11,8 @@ public class Subscriber extends Thread {
     private final String broker;
     private final int qos;
 
-    MqttToKafkaQueue kafkaQueue;
-    MqttToDatabaseQueue databaseQueue;
+    final MqttToKafkaQueue kafkaQueue;
+    final MqttToDatabaseQueue databaseQueue;
 
     public Subscriber(String clientId, String broker, String topic, int qos, MqttToKafkaQueue kafkaQueue, MqttToDatabaseQueue databaseQueue){
         this.clientId = clientId;
@@ -46,8 +46,7 @@ public class Subscriber extends Thread {
                 System.out.println("Subscriber: Qos: " + mqttMessage.getQos());
                 System.out.println("Subscriber: message: " + new String(mqttMessage.getPayload()));
                 System.out.println("");
-                kafkaQueue.push(mqttMessage);
-                databaseQueue.push(mqttMessage);
+                sendMessageToQueues(mqttMessage);
             }
 
             @Override
@@ -62,5 +61,10 @@ public class Subscriber extends Thread {
         } catch (MqttException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void sendMessageToQueues(MqttMessage message){
+        kafkaQueue.push(message);
+        databaseQueue.push(message);
     }
 }

@@ -28,15 +28,13 @@ public class DataProducer extends Thread {
     public void run(){
         System.out.println("Data Producer UP!");
         while(true){
-            if(!queue.isEmpty()){
-                MqttMessage mqttMessage = queue.poll();
-                ProducerRecord<String, String> producerMessage = new ProducerRecord<>("Temperature", new String(mqttMessage.getPayload()));
+            MqttMessage mqttMessage = queue.poll();
+            ProducerRecord<String, String> producerMessage = new ProducerRecord<>("Temperature", new String(mqttMessage.getPayload()));
 
-                this.producer.send(producerMessage);
+            this.producer.send(producerMessage);
 
-                System.out.println("Producer: " + new String(mqttMessage.getPayload()));
-                System.out.println("");
-            }
+            System.out.println("Producer: " + new String(mqttMessage.getPayload()));
+            System.out.println("");
         }
     }
 }

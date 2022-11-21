@@ -34,17 +34,18 @@ public class DatabaseController extends Thread {
     public void run(){
         System.out.println("DatabaseController UP!");
         while(true){
-            if(!mqttQueue.isEmpty()){
-                MqttMessage message = mqttQueue.poll();
-                String temperature = new String(message.getPayload());
-                System.out.println("DatabaseController: " + temperature);
-                saveTemperature(message);
-                // save message to database
-            }
+            MqttMessage message = mqttQueue.poll();
+            String temperature = new String(message.getPayload());
+            System.out.println("DatabaseController: " + temperature);
+            saveTemperature(message);
+
+            /*
+            // it will run on another thread
             if(!kafkaQueue.isEmpty()){
                 System.out.println("DatabaseController: Kafka message saved");
                 //save message to database
             }
+            */
         }
     }
 
