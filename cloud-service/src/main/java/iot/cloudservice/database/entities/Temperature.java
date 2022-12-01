@@ -11,16 +11,16 @@ public class Temperature {
     @Column(tag = true)
     private String location;
     @Column
-    private String value;
+    private Double value;
 
     @Column(timestamp = true)
     private Instant time;
 
-    public String getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 
