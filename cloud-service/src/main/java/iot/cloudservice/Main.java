@@ -5,6 +5,7 @@ import iot.cloudservice.data.KafkaToDatabaseQueue;
 import iot.cloudservice.data.MqttToDatabaseQueue;
 import iot.cloudservice.data.MqttToKafkaQueue;
 import iot.cloudservice.database.DatabaseController;
+import iot.cloudservice.kafkaconsumer.DataConsumer;
 import iot.cloudservice.kafkaproducer.DataProducer;
 import iot.cloudservice.mqttsubscriber.Subscriber;
 
@@ -17,9 +18,10 @@ public class Main {
 
         Subscriber subscriber = new Subscriber("cloud-service", "tcp://localhost:1883", "Temperature", 0, mqttToKafkaQueue, mqttToDatabaseQueue);
         DataProducer producer = new DataProducer(mqttToKafkaQueue);
+        DataConsumer consumer = new DataConsumer(kafkaToDatabaseQueue);
         DatabaseController database = new DatabaseController(mqttToDatabaseQueue, kafkaToDatabaseQueue);
-        Controller controller = new Controller(subscriber, producer, database);
 
+        Controller controller = new Controller(subscriber, producer, consumer, database);
         controller.start();
     }
 }

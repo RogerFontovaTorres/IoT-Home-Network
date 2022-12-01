@@ -18,45 +18,29 @@ public class DatabaseController extends Thread {
     private final InfluxDBClient databaseClient;
     private final char[] token;
 
-    private final String org = "IoTHomeNetwork";
+    private final String org = "iothomenetwork";
 
-    private final String bucket = "iothome";
+    private final String bucket = "iot";
 
 
 
     public DatabaseController(MqttToDatabaseQueue mqttQueue, KafkaToDatabaseQueue kafkaQueue){
         this.mqttQueue = mqttQueue;
         this.kafkaQueue = kafkaQueue;
-        this.token = "huY3H2UN2lvshdmn7bOEoGtqRHqVA00o8VN2OI_K0GxK14ClVsZdnaigwsuniPfyXaLzzz1BvZJg2RMQgzb5MA==".toCharArray();
+        this.token = "0V3x3iOC9wK-30NFucw93Tugp3_1DQ64GuV-WcjgSJJiWqNLfp7Obb0eT6GFajQsZzcMvyw5KZHmtlpGWsWz7A==".toCharArray();
         this.databaseClient = InfluxDBClientFactory.create("http://localhost:8086", token, org, bucket);
     }
 
     public void run(){
-        System.out.println("DatabaseController UP!");
-        while(true){
-            MqttMessage message = mqttQueue.poll();
-            String temperature = new String(message.getPayload());
-            System.out.println("DatabaseController: " + temperature);
-            saveTemperature(message);
-
-            /*
-            // it will run on another thread
-            if(!kafkaQueue.isEmpty()){
-                System.out.println("DatabaseController: Kafka message saved");
-                //save message to database
-            }
-            */
+        KafkaDatabase kafkaDatabase = new KafkaDatabase(this.kafkaQueue, this.databaseClient);
+        MqttDatabase mqttDatabase = new MqttDatabase(this.mqttQueue, this.databaseClient);
+        kafkaDatabase.start();
+        mqttDatabase.start();
+        try {
+            kafkaDatabase.join();
+            mqttDatabase.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
-    }
-
-    public void saveTemperature(MqttMessage message){
-        WriteApiBlocking writeApi = databaseClient.getWriteApiBlocking();
-        String value = new String(message.getPayload());
-        Temperature temperature = new Temperature();
-        temperature.setLocation("home");
-        temperature.setValue(value);
-        temperature.setTime(Instant.now());
-        writeApi.writeMeasurement(WritePrecision.NS,temperature);
-        System.out.println("Temperature saved!");
     }
 }
