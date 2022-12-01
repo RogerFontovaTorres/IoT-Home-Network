@@ -3,7 +3,6 @@ RUN mkdir script
 WORKDIR script
 ADD requirements.txt requirements.txt
 RUN pip install -r requirements.txt
-ADD iot-device.py iot-device.py
-ADD data/ data
-CMD ["python3", "-u", "iot-device.py"]
-
+ADD consumer.py consumer.py
+ADD model_trained.pkl model_trained.pkl
+CMD ["python3", "-u", "consumer.py"]

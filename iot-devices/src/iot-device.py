@@ -10,4 +10,4 @@ for _, row in df.iterrows():
     publish.single("Temperature",
     str(row["Temperature"].item()),
     hostname="host.docker.internal")
-    time.sleep(10)
+    time.sleep(1)
