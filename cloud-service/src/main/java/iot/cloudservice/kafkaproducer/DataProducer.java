@@ -1,19 +1,17 @@
 package iot.cloudservice.kafkaproducer;
 
 import iot.cloudservice.data.MqttToKafkaQueue;
-import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.util.Properties;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class DataProducer extends Thread {
+public class KafkaProducer extends Thread {
     private final Producer<String, String> producer;
     private final MqttToKafkaQueue queue;
 
-    public DataProducer(MqttToKafkaQueue queue){
+    public KafkaProducer(MqttToKafkaQueue queue){
         Properties props = new Properties();
         props.put("bootstrap.servers", "localhost:9092");
         props.put("acks", "all");
@@ -21,7 +19,7 @@ public class DataProducer extends Thread {
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
-        this.producer = new KafkaProducer<>(props);
+        this.producer = new org.apache.kafka.clients.producer.KafkaProducer<>(props);
         this.queue = queue;
     }
 
