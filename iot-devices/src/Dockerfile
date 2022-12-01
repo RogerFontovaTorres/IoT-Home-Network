@@ -3,7 +3,7 @@ RUN mkdir script
 WORKDIR script
 ADD requirements.txt requirements.txt
 RUN pip install -r requirements.txt
-ADD publish.py publish.py
-ADD subscribe.py subscribe.py
-ADD data.csv data.csv
+ADD iot-device.py iot-device.py
+ADD data/ data
+CMD ["python3", "-u", "iot-device.py"]
 
