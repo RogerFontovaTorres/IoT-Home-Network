@@ -22,7 +22,6 @@ public class KafkaDatabase extends Thread{
         System.out.println("Kafka Database Controller UP!");
         while(true){
             ConsumerRecord<String, TemperaturePrediction> record = queue.poll();
-            System.out.println("\n\n\nHERE\n\n\n");
             saveTemperaturePrediction(record);
 
         }

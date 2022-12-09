@@ -24,7 +24,6 @@ public class Controller {
         this.database.start();
         this.subscriber.start();
         this.producer.start();
-        System.out.println("\n\nHERE\n\n");
         this.consumer.start();
 
         try {

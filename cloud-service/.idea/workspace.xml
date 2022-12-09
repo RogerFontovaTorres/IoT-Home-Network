@@ -5,11 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dd36f96a-a4e6-44f3-af7e-32712773a382" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../iot-devices/src/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../iot-devices/src/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot-devices/src/data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../iot-devices/src/data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot-devices/src/publish.py" beforeDir="false" afterPath="$PROJECT_DIR$/../iot-devices/src/publish.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot-devices/src/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../iot-devices/src/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mqtt/python-script/subscribe.py" beforeDir="false" afterPath="$PROJECT_DIR$/../mqtt/python-script/subscribe.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../database/influx-data/influxd.bolt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../database/influx-data/influxd.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloud-service-tcplocalhost1883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/iot/cloudservice/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/iot/cloudservice/controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/iot/cloudservice/database/DatabaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/iot/cloudservice/database/DatabaseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/iot/cloudservice/database/KafkaDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/iot/cloudservice/database/KafkaDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/iot/cloudservice/database/entities/TemperaturePrediction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/iot/cloudservice/database/entities/TemperaturePrediction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../database/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../database/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mqtt/MQTTBroker/log/mosquitto.log" beforeDir="false" afterPath="$PROJECT_DIR$/../mqtt/MQTTBroker/log/mosquitto.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,13 +48,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/roger/uni/4t/CompDist/IoT-Home-Network/cloud-service&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn clean install" />
@@ -58,6 +73,8 @@
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="iot.cloudservice.Main" />
       <module name="cloud-service" />
       <extension name="coverage">
@@ -84,8 +101,14 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1668872414257</updated>
+      <workItem from="1670004002517" duration="4936000" />
+      <workItem from="1670090076980" duration="123000" />
+      <workItem from="1670499878954" duration="3062000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

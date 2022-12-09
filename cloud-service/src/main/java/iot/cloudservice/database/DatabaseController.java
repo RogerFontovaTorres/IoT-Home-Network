@@ -16,18 +16,17 @@ public class DatabaseController extends Thread {
     private final MqttToDatabaseQueue mqttQueue;
     private final KafkaToDatabaseQueue kafkaQueue;
     private final InfluxDBClient databaseClient;
-    private final char[] token;
+    private final char[] token = "Rx0suOdajAw89Vux3SQWMihFzX6iN9PnUoQPb2I-rwDXTvZzJwRxfrXa4vS3-QzqYbCZ-DcC6yjTHWNIA1zH0A==".toCharArray();
 
-    private final String org = "iothomenetwork";
+    private final String org = "iot-home-network";
 
-    private final String bucket = "iot";
+    private final String bucket = "iot-bucket";
 
 
 
     public DatabaseController(MqttToDatabaseQueue mqttQueue, KafkaToDatabaseQueue kafkaQueue){
         this.mqttQueue = mqttQueue;
         this.kafkaQueue = kafkaQueue;
-        this.token = "0V3x3iOC9wK-30NFucw93Tugp3_1DQ64GuV-WcjgSJJiWqNLfp7Obb0eT6GFajQsZzcMvyw5KZHmtlpGWsWz7A==".toCharArray();
         this.databaseClient = InfluxDBClientFactory.create("http://localhost:8086", token, org, bucket);
     }
 

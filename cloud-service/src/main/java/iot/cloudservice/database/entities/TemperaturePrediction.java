@@ -14,7 +14,7 @@ import java.time.Instant;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Measurement(name = "temperature")
+@Measurement(name = "temperature-prediction")
 public class TemperaturePrediction {
 
     @Column(timestamp = true)
@@ -22,7 +22,6 @@ public class TemperaturePrediction {
     @JsonDeserialize(using = MyInstantDeserializer.class)
     private Instant time;
 
-    @Column(tag = true)
     @JsonProperty("yhat")
     private double prediction;
 
@@ -34,7 +33,7 @@ public class TemperaturePrediction {
     @JsonProperty("yhat_upper")
     private double predictionUpper;
 
-    @Column
+    @Column(tag = true)
     @JsonProperty("sensorId")
     private String sensorId;
 }
