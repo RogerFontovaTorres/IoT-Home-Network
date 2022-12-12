@@ -25,7 +25,6 @@ public class DataConsumer extends Thread {
         // Set how to serialize key/value pairs
         props.setProperty("key.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", MyDeserializer.class);
-        //props.setProperty("value.deserializer","org.apache.kafka.common.serialization.DoubleDeserializer");
         // When a group is first created, it has no offset stored to start reading from. This tells it to start
         // with the earliest record in the stream.
         props.setProperty("auto.offset.reset","earliest");
@@ -39,8 +38,8 @@ public class DataConsumer extends Thread {
             ConsumerRecords<String, TemperaturePrediction> records = consumer.poll(Duration.ofMillis(100));
 
             for(ConsumerRecord<String, TemperaturePrediction> record : records){
-                queue.push(record);
-                System.out.println("Consumer: " + record.topic());
+                queue.push(record.value());
+                System.out.println("Consumer: ");
                 System.out.println("        Topic: " + record.topic());
                 System.out.println("        Key: " + record.key());
                 System.out.println("        Value: " + record.value().getTime());
