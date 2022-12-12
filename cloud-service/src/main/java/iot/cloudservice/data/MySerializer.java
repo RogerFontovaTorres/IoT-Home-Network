@@ -3,13 +3,14 @@ package iot.cloudservice.data;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import iot.cloudservice.database.entities.AnaliticsData;
+import iot.cloudservice.database.entities.Temperature;
 import net.razorvine.pickle.Pickler;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;
 
 import java.util.Map;
 
-public class MySerializer implements Serializer<AnaliticsData> {
+public class MySerializer implements Serializer<Temperature> {
     private final ObjectMapper serializer = new ObjectMapper();
 
     @Override
@@ -17,7 +18,7 @@ public class MySerializer implements Serializer<AnaliticsData> {
     }
 
     @Override
-    public byte[] serialize(String topic, AnaliticsData data) {
+    public byte[] serialize(String topic, Temperature data) {
         try {
 
             if (data == null){
