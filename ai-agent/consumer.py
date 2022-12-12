@@ -25,23 +25,21 @@ m = load(open("model_trained.pkl", "rb"))
 
 print("starting")
 for message in my_consumer:
-    print(f"{message} is being processed")
     message = message.value
 
     
-    java_timestamp = message['time']
+    java_timestamp = message['timestamp']
     seconds = java_timestamp / 1000
     sub_seconds  = (java_timestamp % 1000.0) / 1000.0
     date = datetime.datetime.fromtimestamp(seconds + sub_seconds)
 
-    print(message['time'], date.timestamp()*1000)
 
     df_pred = pd.DataFrame.from_records([{"ds": date}])
     forecast = m.predict(df_pred)
-    forecast['sensorId'] = message['sensorId']
-    forecast['ds'] = message['time']
-    data_to_send = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper', 'sensorId']].to_dict(orient="records")
-    print(json.dumps(data_to_send[0]))
+    forecast['sensor_id'] = message['sensor_id']
+    forecast['ds'] = message['timestamp']
+    data_to_send = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper', 'sensor_id']].to_dict(orient="records")
     my_producer.send('analytics_results',
                      value=data_to_send[0])
-    print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper', 'sensorId']])
+    print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper', 'sensor_id']])
+    print()

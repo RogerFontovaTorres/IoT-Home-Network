@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import iot.cloudservice.data.MqttToKafkaQueue;
 import iot.cloudservice.data.MySerializer;
 import iot.cloudservice.database.entities.AnaliticsData;
+import iot.cloudservice.database.entities.Temperature;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -18,7 +19,7 @@ import java.util.Date;
 import java.util.Properties;
 
 public class DataProducer extends Thread {
-    private final Producer<String, AnaliticsData> producer;
+    private final Producer<String, Temperature> producer;
     private final MqttToKafkaQueue queue;
 
     public DataProducer(MqttToKafkaQueue queue){
@@ -38,13 +39,12 @@ public class DataProducer extends Thread {
     public void run(){
         System.out.println("Data Producer UP!");
         while(true){
-            MqttMessage mqttMessage = queue.poll();
-            AnaliticsData data = AnaliticsData.builder().value(Float.parseFloat(new String(mqttMessage.getPayload()))).time(Instant.now().toEpochMilli()).sensorId(String.valueOf(mqttMessage.getId())).build();
-            ProducerRecord<String, AnaliticsData> producerMessage = new ProducerRecord<>("temperature", data);
+            Temperature message = queue.poll();
+            ProducerRecord<String, Temperature> producerMessage = new ProducerRecord<>("temperature", message);
 
             this.producer.send(producerMessage);
 
-            System.out.println("Producer: " + new String(mqttMessage.getPayload()));
+            System.out.println("Producer: " + message.getValue());
             System.out.println("");
         }
     }

@@ -1,7 +1,12 @@
 package iot.cloudservice.database.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.influxdb.annotations.Column;
 import com.influxdb.annotations.Measurement;
+import iot.cloudservice.data.MyInstantDeserializer;
+import iot.cloudservice.data.MyInstantSerializer;
 
 import java.time.Instant;
 
@@ -9,12 +14,25 @@ import java.time.Instant;
 public class Temperature {
 
     @Column(tag = true)
-    private String location;
+    @JsonProperty("sensor_id")
+    private String deviceId;
     @Column
+    @JsonProperty("temperature")
     private Double value;
 
     @Column(timestamp = true)
-    private Instant time;
+    @JsonProperty("timestamp")
+    @JsonDeserialize(using = MyInstantDeserializer.class)
+    @JsonSerialize(using = MyInstantSerializer.class)
+    public Instant time;
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
 
     public Double getValue() {
         return value;
@@ -30,13 +48,5 @@ public class Temperature {
 
     public void setTime(Instant time) {
         this.time = time;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 }

@@ -21,16 +21,16 @@ public class KafkaDatabase extends Thread{
     public void run(){
         System.out.println("Kafka Database Controller UP!");
         while(true){
-            ConsumerRecord<String, TemperaturePrediction> record = queue.poll();
-            saveTemperaturePrediction(record);
+            TemperaturePrediction message = queue.poll();
+            saveTemperaturePrediction(message);
 
         }
 
     }
 
-    public void saveTemperaturePrediction(ConsumerRecord<String, TemperaturePrediction> message){
+    public void saveTemperaturePrediction(TemperaturePrediction message){
         WriteApiBlocking writeApi = databaseClient.getWriteApiBlocking();
-        writeApi.writeMeasurement(WritePrecision.NS,message.value());
+        writeApi.writeMeasurement(WritePrecision.NS,message);
         System.out.println("Temperature prediction saved!");
     }
 }

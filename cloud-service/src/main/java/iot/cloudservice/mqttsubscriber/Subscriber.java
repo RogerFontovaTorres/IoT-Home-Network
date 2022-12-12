@@ -1,7 +1,13 @@
 package iot.cloudservice.mqttsubscriber;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import iot.cloudservice.data.MqttToDatabaseQueue;
 import iot.cloudservice.data.MqttToKafkaQueue;
+import iot.cloudservice.database.entities.Temperature;
 import org.eclipse.paho.client.mqttv3.*;
 
 public class Subscriber extends Thread {
@@ -13,6 +19,7 @@ public class Subscriber extends Thread {
 
     final MqttToKafkaQueue kafkaQueue;
     final MqttToDatabaseQueue databaseQueue;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public Subscriber(String clientId, String broker, String topic, int qos, MqttToKafkaQueue kafkaQueue, MqttToDatabaseQueue databaseQueue){
         this.clientId = clientId;
@@ -63,8 +70,19 @@ public class Subscriber extends Thread {
         }
     }
 
-    public void sendMessageToQueues(MqttMessage message){
-        kafkaQueue.push(message);
-        databaseQueue.push(message);
+    private void sendMessageToQueues(MqttMessage message){
+        Temperature temperature = fromMqttMessageToTemperature(message);
+        kafkaQueue.push(temperature);
+        databaseQueue.push(temperature);
     }
+
+    private Temperature fromMqttMessageToTemperature(MqttMessage message){
+        try {
+            String jsonMessage = new String(message.getPayload());
+            return objectMapper.readValue(jsonMessage, Temperature.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

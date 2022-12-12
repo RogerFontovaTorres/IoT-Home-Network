@@ -8,20 +8,20 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class KafkaToDatabaseQueue {
     // Data received from mqtt will be stored in this queue until kafka producer takes it (in order) and sends it to the AI agent
-    private final ConcurrentLinkedQueue<ConsumerRecord<String, TemperaturePrediction>> kafkaToDatabaseQueue;
+    private final ConcurrentLinkedQueue<TemperaturePrediction> kafkaToDatabaseQueue;
 
     public KafkaToDatabaseQueue(){
         this.kafkaToDatabaseQueue = new ConcurrentLinkedQueue<>();
     }
 
-    public void push(ConsumerRecord<String, TemperaturePrediction> message){
+    public void push(TemperaturePrediction message){
         this.kafkaToDatabaseQueue.add(message);
         synchronized (this.kafkaToDatabaseQueue){
             this.kafkaToDatabaseQueue.notifyAll();
         }
     }
 
-    public ConsumerRecord<String, TemperaturePrediction> poll(){
+    public TemperaturePrediction poll(){
         if(this.isEmpty()){
             this.waitData();
         }
