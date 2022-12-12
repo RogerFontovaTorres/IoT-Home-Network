@@ -34,6 +34,6 @@ public class TemperaturePrediction {
     private double predictionUpper;
 
     @Column(tag = true)
-    @JsonProperty("sensorId")
+    @JsonProperty("sensor_id")
     private String sensorId;
 }

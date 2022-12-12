@@ -24,19 +24,13 @@ public class MqttDatabase extends Thread {
     public void run(){
         System.out.println("Mqtt Database Controller UP!");
         while(true){
-            MqttMessage message = queue.poll();
-            String temperature = new String(message.getPayload());
-            System.out.println("DatabaseController: " + temperature);
+            Temperature message = queue.poll();
+            System.out.println("DatabaseController: " + message.getValue());
             saveTemperature(message);
         }
     }
-    public void saveTemperature(MqttMessage message){
+    public void saveTemperature(Temperature temperature){
         WriteApiBlocking writeApi = databaseClient.getWriteApiBlocking();
-        Double value = Double.valueOf(new String(message.getPayload()));
-        Temperature temperature = new Temperature();
-        temperature.setLocation("home");
-        temperature.setValue(value);
-        temperature.setTime(Instant.now());
         writeApi.writeMeasurement(WritePrecision.NS,temperature);
         System.out.println("Temperature saved!");
     }
