@@ -16,7 +16,7 @@ public class DatabaseController extends Thread {
     private final MqttToDatabaseQueue mqttQueue;
     private final KafkaToDatabaseQueue kafkaQueue;
     private final InfluxDBClient databaseClient;
-    private final char[] token = "Rx0suOdajAw89Vux3SQWMihFzX6iN9PnUoQPb2I-rwDXTvZzJwRxfrXa4vS3-QzqYbCZ-DcC6yjTHWNIA1zH0A==".toCharArray();
+    private final char[] token = "EiXiYMZSHsrd7oXYfL9lZieTj8WGAedJV-VZbA7fFROgLBdb0MOvfmY1ftx45KKWzO0qBAydjfs0-zSPdvEWcA==".toCharArray();
 
     private final String org = "iot-home-network";
 
