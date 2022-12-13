@@ -11,12 +11,13 @@ docker_id = open("/etc/hostname","r").read().split()[0]
 
 
 
-for _, row in df.iterrows():   
-    temperature = row["Temperature"].item()
-    timestamp = round(time.time()*1000)
-    message = json.dumps({"sensor_id": docker_id, "temperature": temperature, "timestamp": timestamp}).encode('utf-8')
-    print(message)
-    publish.single("Temperature",
-        message,
-        hostname="host.docker.internal")
-    time.sleep(5)
+while True:
+    for _, row in df.iterrows():   
+        temperature = row["Temperature"].item()
+        timestamp = round(time.time()*1000)
+        message = json.dumps({"sensor_id": docker_id, "temperature": temperature, "timestamp": timestamp}).encode('utf-8')
+        print(message)
+        publish.single("Temperature",
+            message,
+            hostname="host.docker.internal")
+        time.sleep(5)
