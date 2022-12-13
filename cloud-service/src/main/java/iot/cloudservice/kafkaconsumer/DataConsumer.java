@@ -42,7 +42,7 @@ public class DataConsumer extends Thread {
                 System.out.println("Consumer: ");
                 System.out.println("        Topic: " + record.topic());
                 System.out.println("        Key: " + record.key());
-                System.out.println("        Value: " + record.value().getTime());
+                System.out.println("        Value: " + record.value());
                 System.out.println("        Instant: " + Instant.now());
                 System.out.println("        Instant: " + Instant.now().toEpochMilli());
 

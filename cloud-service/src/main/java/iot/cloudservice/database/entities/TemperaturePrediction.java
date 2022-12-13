@@ -22,6 +22,7 @@ public class TemperaturePrediction {
     @JsonDeserialize(using = MyInstantDeserializer.class)
     private Instant time;
 
+    @Column
     @JsonProperty("yhat")
     private double prediction;
 

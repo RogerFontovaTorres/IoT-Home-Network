@@ -16,8 +16,8 @@ public class Main {
         MqttToDatabaseQueue mqttToDatabaseQueue = new MqttToDatabaseQueue();
         KafkaToDatabaseQueue kafkaToDatabaseQueue = new KafkaToDatabaseQueue();
 
-        Subscriber subscriber = new Subscriber("cloud-service", "tcp://localhost:1883", "Temperature", 0, mqttToKafkaQueue, mqttToDatabaseQueue);
         DataProducer producer = new DataProducer(mqttToKafkaQueue);
+        Subscriber subscriber = new Subscriber("cloud-service", "tcp://localhost:1883", "Temperature", 0, mqttToKafkaQueue, mqttToDatabaseQueue);
         DataConsumer consumer = new DataConsumer(kafkaToDatabaseQueue);
         DatabaseController database = new DatabaseController(mqttToDatabaseQueue, kafkaToDatabaseQueue);
 
