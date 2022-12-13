@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dd36f96a-a4e6-44f3-af7e-32712773a382" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../database/influx-data/influxd.bolt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../database/influx-data/influxd.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloud-service-tcplocalhost1883/.lck" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/iot/cloudservice/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/iot/cloudservice/controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/iot/cloudservice/database/DatabaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/iot/cloudservice/database/DatabaseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/iot/cloudservice/database/KafkaDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/iot/cloudservice/database/KafkaDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/iot/cloudservice/database/entities/TemperaturePrediction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/iot/cloudservice/database/entities/TemperaturePrediction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../database/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../database/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mqtt/MQTTBroker/log/mosquitto.log" beforeDir="false" afterPath="$PROJECT_DIR$/../mqtt/MQTTBroker/log/mosquitto.log" afterDir="false" />
-    </list>
+    <list default="true" id="dd36f96a-a4e6-44f3-af7e-32712773a382" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
