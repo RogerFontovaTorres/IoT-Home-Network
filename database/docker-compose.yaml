@@ -12,4 +12,7 @@ services:
       - DOCKER_INFLUXDB_INIT_PASSWORD=iothomenetwork
       - DOCKER_INFLUXDB_INIT_ORG=iot-home-network
       - DOCKER_INFLUXDB_INIT_BUCKET=iot-bucket
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=asdf12341234asdf
+
+
 
