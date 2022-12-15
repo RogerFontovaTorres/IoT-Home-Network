@@ -40,11 +40,11 @@ public class Subscriber extends Thread {
     }
 
     public void run(){
-        System.out.println("Subscriber UP!");
         client.setCallback(new MqttCallback() {
             @Override
             public void connectionLost(Throwable throwable) {
                 System.out.println("Connection lost: " + throwable);
+                run();
             }
 
             @Override
@@ -65,8 +65,15 @@ public class Subscriber extends Thread {
         try {
             client.connect();
             client.subscribe(topic, qos);
+            System.out.println("Subscriber UP!");
         } catch (MqttException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
+            try {
+                Thread.sleep(5000);
+                run();
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 
