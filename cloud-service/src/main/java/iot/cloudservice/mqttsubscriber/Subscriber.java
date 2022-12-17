@@ -5,8 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import iot.cloudservice.data.MqttToDatabaseQueue;
-import iot.cloudservice.data.MqttToKafkaQueue;
+import iot.cloudservice.data.PasiveWaitQueue;
 import iot.cloudservice.database.entities.Temperature;
 import org.eclipse.paho.client.mqttv3.*;
 
@@ -17,11 +16,11 @@ public class Subscriber extends Thread {
     private final String broker;
     private final int qos;
 
-    final MqttToKafkaQueue kafkaQueue;
-    final MqttToDatabaseQueue databaseQueue;
+    final PasiveWaitQueue<Temperature> kafkaQueue;
+    final PasiveWaitQueue<Temperature> databaseQueue;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public Subscriber(String clientId, String broker, String topic, int qos, MqttToKafkaQueue kafkaQueue, MqttToDatabaseQueue databaseQueue){
+    public Subscriber(String clientId, String broker, String topic, int qos, PasiveWaitQueue<Temperature> kafkaQueue, PasiveWaitQueue<Temperature> databaseQueue){
         this.clientId = clientId;
         this.topic = topic;
         this.qos = qos;

@@ -3,17 +3,14 @@ package iot.cloudservice.database;
 import com.influxdb.client.InfluxDBClient;
 import com.influxdb.client.WriteApiBlocking;
 import com.influxdb.client.domain.WritePrecision;
-import iot.cloudservice.data.KafkaToDatabaseQueue;
+import iot.cloudservice.data.PasiveWaitQueue;
 import iot.cloudservice.database.entities.TemperaturePrediction;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-
-import java.time.Instant;
 
 public class KafkaDatabase extends Thread{
-    private final KafkaToDatabaseQueue queue;
+    private final PasiveWaitQueue<TemperaturePrediction> queue;
 
     private final InfluxDBClient databaseClient;
-    public KafkaDatabase(KafkaToDatabaseQueue queue, InfluxDBClient databaseClient){
+    public KafkaDatabase(PasiveWaitQueue<TemperaturePrediction> queue, InfluxDBClient databaseClient){
         this.queue = queue;
         this.databaseClient = databaseClient;
     }

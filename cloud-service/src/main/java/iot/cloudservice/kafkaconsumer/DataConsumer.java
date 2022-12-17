@@ -1,8 +1,7 @@
 package iot.cloudservice.kafkaconsumer;
 
-import iot.cloudservice.data.KafkaToDatabaseQueue;
-import iot.cloudservice.data.MqttToKafkaQueue;
-import iot.cloudservice.data.MyDeserializer;
+import iot.cloudservice.data.TemperaturePredictionDeserializer;
+import iot.cloudservice.data.PasiveWaitQueue;
 import iot.cloudservice.database.entities.TemperaturePrediction;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -15,24 +14,24 @@ import java.util.Properties;
 
 public class DataConsumer extends Thread {
     private final KafkaConsumer<String, TemperaturePrediction> consumer;
-    private final KafkaToDatabaseQueue queue;
+    private final PasiveWaitQueue<TemperaturePrediction> queue;
 
-    public DataConsumer(KafkaToDatabaseQueue queue){
+    public DataConsumer(PasiveWaitQueue<TemperaturePrediction> queue){
         this.queue = queue;
         Properties props = new Properties();
         props.put("bootstrap.servers", "localhost:9092");
         props.setProperty("group.id", "predictions-results");
         // Set how to serialize key/value pairs
         props.setProperty("key.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
-        props.put("value.deserializer", MyDeserializer.class);
+        props.put("value.deserializer", TemperaturePredictionDeserializer.class);
         // When a group is first created, it has no offset stored to start reading from. This tells it to start
         // with the earliest record in the stream.
-        props.setProperty("auto.offset.reset","earliest");
+        props.setProperty("auto.offset.reset","latest");
         consumer = new KafkaConsumer<>(props);
         consumer.subscribe(Collections.singletonList("analytics_results"));
     }
 
-    public void start(){
+    public void run(){
         System.out.println("Data Consumer UP!");
         while(true){
             ConsumerRecords<String, TemperaturePrediction> records = consumer.poll(Duration.ofMillis(100));
@@ -42,9 +41,8 @@ public class DataConsumer extends Thread {
                 System.out.println("Consumer: ");
                 System.out.println("        Topic: " + record.topic());
                 System.out.println("        Key: " + record.key());
-                System.out.println("        Value: " + record.value());
-                System.out.println("        Instant: " + Instant.now());
-                System.out.println("        Instant: " + Instant.now().toEpochMilli());
+                System.out.println("        Value: " + record.value().getPrediction());
+                System.out.println("        Instant: " + record.value().getTime());
 
                 System.out.println("");
             }

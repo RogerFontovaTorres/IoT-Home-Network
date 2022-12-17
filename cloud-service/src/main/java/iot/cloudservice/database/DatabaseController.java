@@ -2,19 +2,13 @@ package iot.cloudservice.database;
 
 import com.influxdb.client.InfluxDBClient;
 import com.influxdb.client.InfluxDBClientFactory;
-import com.influxdb.client.WriteApiBlocking;
-import com.influxdb.client.domain.WritePrecision;
-import com.influxdb.client.write.Point;
-import iot.cloudservice.data.KafkaToDatabaseQueue;
-import iot.cloudservice.data.MqttToDatabaseQueue;
+import iot.cloudservice.data.PasiveWaitQueue;
 import iot.cloudservice.database.entities.Temperature;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
-
-import java.time.Instant;
+import iot.cloudservice.database.entities.TemperaturePrediction;
 
 public class DatabaseController extends Thread {
-    private final MqttToDatabaseQueue mqttQueue;
-    private final KafkaToDatabaseQueue kafkaQueue;
+    private final PasiveWaitQueue<Temperature> mqttQueue;
+    private final PasiveWaitQueue<TemperaturePrediction> kafkaQueue;
     private final InfluxDBClient databaseClient;
     private final char[] token = "asdf12341234asdf".toCharArray();
 
@@ -24,7 +18,7 @@ public class DatabaseController extends Thread {
 
 
 
-    public DatabaseController(MqttToDatabaseQueue mqttQueue, KafkaToDatabaseQueue kafkaQueue){
+    public DatabaseController(PasiveWaitQueue<Temperature> mqttQueue, PasiveWaitQueue<TemperaturePrediction> kafkaQueue){
         this.mqttQueue = mqttQueue;
         this.kafkaQueue = kafkaQueue;
         this.databaseClient = InfluxDBClientFactory.create("http://localhost:8086", token, org, bucket);
