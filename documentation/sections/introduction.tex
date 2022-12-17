@@ -1,0 +1,15 @@
+\documentclass[../informe.tex]{subfiles}
+\begin{document}
+This project attempts to create a whole network of IoT. This network is composed of:
+\begin{itemize}
+  \item \textbf{MQTT broker:} It enables the communication between the temperature sensors and the cloud service.
+  \item \textbf{Kafka broker:} It enables the communication between the cloud service and the AI agent.
+  \item \textbf{Temperature sensors:} Simulated sensors that read temperatures from a CSV file and send them to the MQTT broker.
+  \item \textbf{Cloud Service:} Reads the data sent by the sensors to the MQTT broker, stores the data, sends it to a Kafka broker, receives the AI predictions sent to the Kafka broker, and stores all the data.
+  \item \textbf{AI agent:} Makes predictions with the given temperatures.
+  \item \textbf{Non relational database:} Stores all the processed data by the cloud service.
+\end{itemize}
+
+In the following sections it will be explained the main decision that we have taken in order to implement the whole network.
+\end{document}
+

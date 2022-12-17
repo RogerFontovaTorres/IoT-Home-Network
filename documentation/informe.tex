@@ -1,0 +1,84 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage{graphicx} % needed for images
+\usepackage[export]{adjustbox} % needed for adjustable images
+\usepackage{flafter} % needed for figures
+\usepackage{hyperref} % needed for a clickable table of contents
+% \usepackage{cleveref}
+\usepackage{subfiles} % needed for a subfile structure
+\usepackage[table]{xcolor}
+\usepackage{fancyhdr} % needed for fancy header 
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{lineno}
+
+\graphicspath{ {images/} }
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{Cloud Service - Distributed Computing}
+\fancyfoot[LE,RO]{\thepage}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+
+% information
+\title{%
+    \begin{center}
+	\includegraphics[width=4cm,height=3cm]{udl.png}
+    \end{center}
+    \line(1,0){250}\\[0.3cm]
+    \textbf{Cloud Service}
+    \line(1,0){250}
+    \\[0.5cm]
+	\large Cloud Service - Grau en Enginyeria Informàtica
+}
+\author{Artur Cullerés Cervera \\ Roger Fontova Torres}
+\date{\today}
+
+% document
+\begin{document}
+    
+% title
+\maketitle
+\thispagestyle{empty}
+\newpage
+\tableofcontents
+\listoffigures
+% \listoftables
+\newpage
+\
+\newpage
+
+% begin contents
+
+\section{Introduction}
+\label{sections:introduction}
+\subfile{sections/introduction.tex}
+
+\section{Cloud service}
+\label{sections:cloud-service}
+\subfile{sections/cloud-service-architecture.tex}
+
+\section{Curiosities}
+In Java, Instant objects cannot be serialized or deserialized, so a custom Serializer/Deserializer is needed. So our custom serializer converts an the Instant object to milliseconds and the deserializer converts milliseconds to Instant object. In orther to specify to the entity that has an Instant attribute how to serialize/deserialize it, we used the following tags: \\
+
+\begin{lstlisting}[language=java]
+@Column(timestamp = true)
+@JsonProperty("timestamp")
+@JsonDeserialize(using = MyInstantDeserializer.class)
+@JsonSerialize(using = MyInstantSerializer.class)
+public Instant time;
+
+\end{lstlisting}
+
+
+\begin{itemize}
+  \item @Column(timestamp = true): used for the database to use it as the timestamp.
+  \item @JsonProperty("timestamp"): name to match on the json object when serializing or deserializing.
+  \item @JsonDeserialize(using = MyInstantDeserializer.class): specifies the deserializer class
+  \item @JsonSerialize(using = MyInstantSerializer.class): specifies the serializer class
+\end{itemize}
+
+\end{document}
