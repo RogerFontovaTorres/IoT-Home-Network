@@ -61,7 +61,13 @@
 \label{sections:cloud-service}
 \subfile{sections/cloud-service-architecture.tex}
 
+\section{Database}
+For the database we decided to use InfluxDB since it is a time series database. These means that it is optimized to store data that the time when it is collected is important. \\
+
+To access the database a token is needed, so it is specified on the docker-compose.yaml to always use the same one.
+
 \section{Curiosities}
+\subsection{Java Instant}
 In Java, Instant objects cannot be serialized or deserialized, so a custom Serializer/Deserializer is needed. So our custom serializer converts an the Instant object to milliseconds and the deserializer converts milliseconds to Instant object. In orther to specify to the entity that has an Instant attribute how to serialize/deserialize it, we used the following tags: \\
 
 \begin{lstlisting}[language=java]
@@ -80,5 +86,50 @@ public Instant time;
   \item @JsonDeserialize(using = MyInstantDeserializer.class): specifies the deserializer class
   \item @JsonSerialize(using = MyInstantSerializer.class): specifies the serializer class
 \end{itemize}
+
+\subsection{MQTT fault tolerance}
+When the MQTT subscriber looses its connection, the thread dies, so in order to avoid that, we catched the exception and run again the run() method, with a waiting time. This may cause an infinite loop, however, it is necessari to keep trying to reconect to the broker. \\
+
+\begin{lstlisting}[language=java]
+try {
+    client.connect();
+    client.subscribe(topic, qos);
+    System.out.println("Subscriber UP!");
+} catch (MqttException e) {
+    System.out.println(e.getMessage());
+    try {
+        Thread.sleep(5000);
+        run();
+    } catch (InterruptedException ex) {
+        throw new RuntimeException(ex);
+    }
+}
+
+\end{lstlisting}
+
+\subsection{Docker compose fault tolerance}
+If the project was executed with docker\textendash compose.yaml only using the depends\_on option, it wouldn't execute, since it only depends on the creation of the container, not the execution of its code. \\ 
+
+To avoid any kind of problem, it is necessary to use the option healthcheck. This allows to check if the server running on another container is already up (healthy). If that's the case, the depending container can run. The following code shows an example of how to set the healthcheck option: \\
+
+
+\begin{lstlisting}[language=java]
+healthcheck:
+    test: curl --fail http://localhost:8086/health || exit 1
+    interval: 10s
+    retries: 5
+    start_period: 5s
+    timeout: 10s
+\end{lstlisting}
+
+\section{Conclusions}
+With this project we have learnt a lot about MQTT and Kafka. Even though it is all simulated with docker containers, it would only need a little more of efford to deploy it with real sensors and with a server for the cloud service and the MQTT and Kafka brokers. Not only we have learnt about MQTT and Kafka, we also have learnt a lot about docker and serialization of objects. \\
+
+It also has been a lot of fun designing and implementing the cloud service with this particular architecture. Of course it has a lot of margin of improvement, for example, it could be implemented commands to start or stop different parts of the cloud service, for example, if the kafka database thread dies, be able to rerun it manually with a command. \\
+
+Finally, we will leave the link to the \href{https://github.com/RogerFontovaTorres/IoT-Home-Network}{github repository} of the project so anyone can access the source code. \\
+
+The README.md has an explanation of how to run the project.
+
 
 \end{document}
