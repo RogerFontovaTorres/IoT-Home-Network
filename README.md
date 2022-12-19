@@ -13,18 +13,6 @@ In order to execute the project the following dependencies are needed:
   - jdk17
   - Docker (also docker compose)
   
-First of all we will create the database, so we acces the database folder and execute
-
-```
-docker compose up
-```
-
-Now we can access the database client by searching "localhost:8086" on our favorite browswer
-  - username: iot
-  - password: iothomenetwork
-
-We will create an access token and paste it inisde the variable token from the file DatabaseController.java (it can be found on cloud-service/src/main/java/iot/cloudservice/database/DatabaseController.java).
-
 First of all compile the java code:
 
 ```
