@@ -25,19 +25,19 @@ Now we can access the database client by searching "localhost:8086" on our favor
 
 We will create an access token and paste it inisde the variable token from the file DatabaseController.java (it can be found on cloud-service/src/main/java/iot/cloudservice/database/DatabaseController.java).
 
-Then we will compile the java code:
+First of all compile the java code:
 
 ```
 mvn clean package
 ```
 
-Once it finishes, we will to create the docker image:
+Once it finishes, create the docker image:
 
 ```
 docker build -t cloud-service .
 ```
 
-Finally, we can run the whole project typing the following command on the root of the project:
+Finally, run the whole project typing the following command on the root of the project:
 
 ```
 docker compose up
