@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  influxdb:
+    image: influxdb:2.4.0
+    ports:
+      - "8086:8086"
+    volumes:
+      - ./influx-data:/var/lib/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=iot
+      - DOCKER_INFLUXDB_INIT_PASSWORD=iothomenetwork
+      - DOCKER_INFLUXDB_INIT_ORG=iot-home-network
+      - DOCKER_INFLUXDB_INIT_BUCKET=iot-bucket
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=asdf12341234asdf
+
+
+
